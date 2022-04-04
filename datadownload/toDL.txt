@@ -1,0 +1,16 @@
+https://resources.lendingclub.com/secure/LoanStats3c_securev1.csv.zip?signature=EF9A37rAcAmj527AY3Z%2FQZrcnhw%3D&issued=1568250833604
+https://resources.lendingclub.com/secure/LoanStats3d_securev1.csv.zip?signature=PpNGlGCsjctovNBmz48W2F1XKro%3D&issued=1568250833604
+https://resources.lendingclub.com/secure/LoanStats_securev1_2016Q1.csv.zip?signature=HrCclTSF2q8nT2kUj7dj%2BDw%2FMMg%3D&issued=1568250833609
+https://resources.lendingclub.com/secure/LoanStats_securev1_2016Q2.csv.zip?signature=WLfXgrUfGdZ8forCfBlLZt%2B6QT4%3D&issued=1568250833610
+https://resources.lendingclub.com/secure/LoanStats_securev1_2016Q3.csv.zip?signature=KHzQeTX7PR6jpkyCZ26ecgGPXLA%3D&issued=1568250833612
+https://resources.lendingclub.com/secure/LoanStats_securev1_2016Q4.csv.zip?signature=AwdO%2FrQ32tHC7uVIYOMWl5LkMLI%3D&issued=1568250833613
+https://resources.lendingclub.com/secure/LoanStats_securev1_2017Q1.csv.zip?signature=G0qho97w9upPsH0z0pPZI576Ru4%3D&issued=1568250833615
+https://resources.lendingclub.com/secure/LoanStats_securev1_2017Q2.csv.zip?signature=eg%2FXwdfKusRWSxj5sSuOYN9cy%2BA%3D&issued=1568250833623
+https://resources.lendingclub.com/secure/LoanStats_securev1_2017Q3.csv.zip?signature=aPu6WK4ukH7YjFfMnrhKGWPvuqQ%3D&issued=1568250833625
+https://resources.lendingclub.com/secure/LoanStats_securev1_2017Q4.csv.zip?signature=vf5gL24vsInK%2FijSibBAulBX0wE%3D&issued=1568250833627
+https://resources.lendingclub.com/secure/LoanStats_securev1_2018Q1.csv.zip?signature=IfdmwTUXqNx2HmJsmcsKeorVkX4%3D&issued=1568250833628
+https://resources.lendingclub.com/secure/LoanStats_securev1_2018Q2.csv.zip?signature=pvwqnn2GB7slYTEuRNM2IXfTGTU%3D&issued=1568250833630
+https://resources.lendingclub.com/secure/LoanStats_securev1_2018Q3.csv.zip?signature=JaXZjVfAYLV%2F6BIQGO80Zr2hwHE%3D&issued=1568250833631
+https://resources.lendingclub.com/secure/LoanStats_securev1_2018Q4.csv.zip?signature=ixiSwDNm0g1Qv6WPqETbI2xxpzY%3D&issued=1568250833633
+https://resources.lendingclub.com/secure/LoanStats_securev1_2019Q1.csv.zip?signature=agD6Nz6XB17lVSNyeC%2FYygq5pXQ%3D&issued=1568250833634
+https://resources.lendingclub.com/secure/LoanStats_securev1_2019Q2.csv.zip?signature=NvrH0XUbKUWTn4O1rSTTjcMWu2Y%3D&issued=1568250833636

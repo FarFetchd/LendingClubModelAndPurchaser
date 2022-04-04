@@ -1,0 +1,37 @@
+Features used:
+===========================
+MTHS_SINCE_LAST_MAJOR_DEROG + delinq_2yrs + latitude + longitude + 
+jobtitlegood + EMPLOYMENT_LENGTH + REVOLVING_UTILIZATION + 
+INQUIRIES_IN_LAST_6_MONTHS + after_loan_monthly_income +
+dti_frac + FICO_RANGE_LOW + purp_spec_badness + LOAN_AMOUNT + is_rent
+
+(same as previous oct2018)
+===========================
+(RF, ntree=500)
+
+Using interestCeiling=0.195.
+
+It definitely appears that 10% interest is the sweet spot. A few different probBads around 0.06 were very good:
+       ROIavg           fractaken   numtaken
+0.0741 0.0792  0.0843   0.00865     3332   0.060    0.100
+0.0748 0.0801  0.0855   0.00787     3029   0.058    0.100
+
+The purchaser started using this model after the day's work of 2018/3/5.
+
+...oh hmm, if we want way faster spending, then:
+0.0698 0.0740  0.0783    0.0205     6007   0.098    0.110
+0.0722 0.0759  0.0795    0.0256     7471   0.098    0.105
+0.0717 0.0752  0.0788    0.0270     7890   0.098    0.100
+0.0691 0.0722  0.0753    0.0327     9570   0.098    0.095
+0.0707 0.0748  0.0789    0.0222     6502   0.100    0.110
+0.0730 0.0765  0.0799    0.0276     8073   0.100    0.105***
+0.0725 0.0759  0.0792    0.0291     8512   0.100    0.100
+0.0697 0.0727  0.0757    0.0352    10299   0.100    0.095
+0.0695 0.0737  0.0779    0.0215     6297   0.102    0.115
+0.0701 0.0740  0.0779    0.0240     7007   0.102    0.110
+0.0723 0.0757  0.0791    0.0297     8687   0.102    0.105
+0.0719 0.0752  0.0784    0.0313     9152   0.102    0.100
+0.0694 0.0723  0.0752    0.0378    11062   0.102    0.095
+
+yeah actually, moving the "above the cash threshold" setting up to
+.1 probBad, 10% interest, after day's work of 2019/3/9.

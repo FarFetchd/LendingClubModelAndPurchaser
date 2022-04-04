@@ -1,0 +1,29 @@
+
+The dynamic spendrate approach:
+
+I looked at historical data (like a month or two in mid2019) to get a sense of
+  1) the average payback rate for a given total_invested, and
+  2) the average notes chosen per day for a given fractaken.
+
+From there, went back to the spend-down triangle. Figured, ok, units are dollardays.
+Let's think in terms of opportunity cost. What does VMATX get you?
+It gets you <interest> dollars per dollaryear = (currently) 7.39726e-5 dollars per dollarday. So there's the oppcost.
+
+Next, take the return you get from the given LC param (roughly, ROIavg * cash_avail).
+Subtract oppcost from that... which is the oppcost mentioned above PLUS the 3 yrs worth of VMATX.
+
+Now, from the fractaken of the given LC param, you can get spendrate.
+
+At this point, filter out anything whose spendrate would spend current avail_cash in <30 days.
+  (because if it will take that long, I might as well move the excess out to VMATX at my monthly money manage thing.)
+
+Finally, run that return-oppcost on all params, and choose the best. That is dynamically passed to D (by being written into the state/ files). YAY!!!!!!!!
+
+
+NOTE: here is roughly (not exactly) the param choice that keeps spendrate ~0:
+ROIavg fractaken numtaken badProb interest intceil
+...
+0.0832   0.01450     7709  0.0700    0.110   0.180
+0.0844   0.01280     6770  0.0675    0.110   0.180 ***equilibrium spendrate
+0.0848   0.01110     5911  0.0650    0.110   0.180
+...

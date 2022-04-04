@@ -1,0 +1,28 @@
+NOTES:
+* badness_by_zip is now sanitized of low-sample ZIPs; ones that would be 0 or 1
+  are instead replaced with median or max.
+* Did a single 10fold CV run.
+* Otherwise identical to Sep2019 XGBv1 notes.
+* Reminder, since I forgot and had to re-figure-out: looks like the ROIs
+  here and in all older ones do NOT include the ~1% LC fee.
+
+
+Features used:
+===========================
+Identical to Sep2019 XGBv1:
+"MTHS_SINCE_LAST_MAJOR_DEROG","delinq_2yrs","badness_by_zip","jobtitlegood", "EMPLOYMENT_LENGTH",
+"REVOLVING_UTILIZATION","INQUIRIES_IN_LAST_6_MONTHS", "after_loan_monthly_income","dti_frac",
+"FICO_RANGE_LOW", "purp_spec_badness","LOAN_AMOUNT", "is_rent"
+
+params (Identical to Sep2019 XGBv1): maxdepth = 11, numrounds = 200, eta = 0.1, minchildweight = 10
+
+probBad cutoffs and interest threshs still dynamically chosen.
+
+
+
+For an idea of performance, see
+recordkeeping/cleaned-bbZIP_vs_without_vs_sep2019.pdf: The 3 10-fold CV runs
+from Sep2019 vs the one with identical XGBv1 model from May2020 vs the XGBv1.1
+model with bbZ sanitized.
+Basically, with updated data, probably slightly better overall, but significantly
+better for higher fractakens.

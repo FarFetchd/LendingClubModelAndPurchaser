@@ -1,0 +1,3 @@
+
+rest_loans_cpp: source_cpp/account_info.cc source_cpp/account_info.h  source_cpp/json.hpp source_cpp/rest_client.h source_cpp/time_util.cc source_cpp/time_util.h  source_cpp/waiting.h source_cpp/file_io.h source_cpp/file_io.cc  source_cpp/main.cc   source_cpp/rest_client.cc  source_cpp/R_wrapper.cc source_cpp/R_wrapper.h  source_cpp/waiting.cc source_cpp/std_using.h source_cpp/purchase_req_res.h
+	g++ -Wno-psabi source_cpp/main.cc source_cpp/R_wrapper.cc source_cpp/time_util.cc source_cpp/rest_client.cc source_cpp/file_io.cc source_cpp/waiting.cc source_cpp/account_info.cc -o rest_loans_cpp -lcurl

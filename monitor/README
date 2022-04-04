@@ -1,0 +1,4 @@
+note that the data/ directory in here is now ITS OWN GIT REPO. (and is not in the main loans repo).
+
+that means that if you have cloned a copy of the loans repo, you ought to then come into this monitor/ dir and
+clone the data repo. the data repo git thing lives in ~/.loans_git alongside loans.git.

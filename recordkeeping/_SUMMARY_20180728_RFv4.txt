@@ -1,0 +1,40 @@
+Features used:
+===========================
+MTHS_SINCE_LAST_MAJOR_DEROG + delinq_2yrs + latitude + longitude + 
+jobtitlegood + EMPLOYMENT_LENGTH + REVOLVING_UTILIZATION + 
+INQUIRIES_IN_LAST_6_MONTHS + after_loan_monthly_income +
+dti_frac + FICO_RANGE_LOW + badness_by_purpose + LOAN_AMOUNT + is_rent
+===========================
+(RF, ntree=500)
+The "filtering" ideas I was having around this time (e.g. don't even
+consider people with bankruptcies etc) didn't pan out; not used here.
+
+Using interestCeiling=0.19.
+Using probBad=0.04,  interestFloor=0.085,
+until cash available drops below 1500, at which point
+      probBad=0.032, interestFloor=0.11
+...oh wait, and apparently we also had a second selection (active at all times):
+      const float secondProbBadCutoff = 0.06;
+      const float secondInterestFloor = 0.17;
+
+Sample of the interesting historical crossval performances:
+(see eval_RFv4_20180728_kg_loanamt_FULLDATA_pareto.csv)
+
+ROI95lo ROIavg ROI95hi fractaken numtaken badProb interest
+ 0.0640 0.0672  0.0703  5.37e-02    10553   0.120    0.100
+ 0.0650 0.0684  0.0718  4.64e-02     9133   0.114    0.100
+ 0.0653 0.0695  0.0736  2.95e-02     5805   0.098    0.100
+ 0.0668 0.0716  0.0765  2.20e-02     4321   0.092    0.105
+ 0.0665 0.0724  0.0782  1.19e-02     2350   0.062    0.090
+ 0.0670 0.0748  0.0826  7.89e-03     1552   0.062    0.100*
+ 0.0709 0.0777  0.0845  5.69e-03     1119   0.040    0.080
+ 0.0689 0.0792  0.0894  4.25e-03      836   0.050    0.100
+ 0.0712 0.0802  0.0891  3.98e-03      782   0.040    0.085*
+ 0.0711 0.0829  0.0947  3.00e-03      590   0.044    0.100
+ 0.0743 0.0864  0.0984  2.64e-03      519   0.042    0.100
+ 0.0774 0.0901  0.1030  2.29e-03      450   0.040    0.100
+ 0.0801 0.0933  0.1070  1.96e-03      386   0.038    0.100
+ 0.0807 0.0961  0.1120  1.49e-03      294   0.036    0.105
+ 0.0851 0.1050  0.1240  8.95e-04      176   0.032    0.110*
+ 0.0857 0.1100  0.1340  5.39e-04      106   0.028    0.110
+ 

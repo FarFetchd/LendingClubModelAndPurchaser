@@ -1,0 +1,56 @@
+Features used:
+===========================
+MTHS_SINCE_LAST_MAJOR_DEROG + delinq_2yrs + latitude + longitude + 
+jobtitlegood + EMPLOYMENT_LENGTH + REVOLVING_UTILIZATION + 
+INQUIRIES_IN_LAST_6_MONTHS + after_loan_monthly_income +
+dti_frac + FICO_RANGE_LOW + purp_spec_badness + LOAN_AMOUNT + is_rent
+
+(diff from previous: badness_by_purpose replaced by purp_spec_badness)
+===========================
+(RF, ntree=500)
+
+Using interestCeiling=0.19.
+Using: when cash>1500 probBad=0.044, interestFloor=0.1,
+       when cash<1500 probBad=0.044, interestFloor=0.1, (YUP, SAME! just a hack to not use the cash threshold logic.)
+                  OR (at any time)
+      probBad=0.106, interestFloor=0.165
+(and no "different settings when cash drops below").
+
+UPDATE, night of 2018/11/5: switching to .06 PB, 0.1 int for high cash, and same 0.044 and 0.1 when low.
+
+Sample of the interesting historical crossval performances:
+(see eval_RFv4_20181021_purp_spec_badness_cv25_pareto.csv)
+(see eval_RFv4.1_20181021_zoom_2x10CVkg_and_25CVsp.pdf for comparison
+ with previous known good)
+
+48  565  0.0706 0.0778  0.0850  0.006880     1862   0.058    0.105
+49  584  0.0715 0.0784  0.0852  0.007530     2040   0.060    0.105
+50  489  0.0698 0.0786  0.0873  0.004430     1200   0.050    0.105
+51  566  0.0718 0.0786  0.0853  0.007480     2026   0.058    0.100
+52  490  0.0705 0.0787  0.0869  0.004840     1310   0.050    0.100
+53  585  0.0729 0.0793  0.0856  0.008230     2227   0.060    0.100*
+54  452  0.0718 0.0808  0.0897  0.003790     1026   0.046    0.100*
+55  470  0.0718 0.0808  0.0898  0.003950     1070   0.048    0.105
+56  433  0.0717 0.0810  0.0904  0.003390      918   0.044    0.100
+57  471  0.0728 0.0812  0.0896  0.004310     1166   0.048    0.100
+58  954  0.0669 0.0812  0.0954  0.002930      793   0.100    0.155
+59  955  0.0669 0.0812  0.0954  0.002930      793   0.100    0.150
+60  414  0.0713 0.0814  0.0914  0.002980      806   0.042    0.100
+61  935  0.0679 0.0827  0.0975  0.002750      744   0.098    0.155
+62  936  0.0679 0.0827  0.0975  0.002750      744   0.098    0.150*
+63 1085  0.0669 0.0828  0.0988  0.002450      663   0.114    0.165
+64 1047  0.0668 0.0840  0.1010  0.002150      582   0.110    0.165
+65 1028  0.0665 0.0843  0.1020  0.002020      547   0.108    0.165
+
+I ran 25-fold CV again. See eval_RFv4.1_20181022_compare_two_25CV_runs.pdf
+for how the pareto fronts compared to each other... definitely not quite
+identical. However, eval_RFv4.1_20181021_purp_spec_badness_cv25_THRESHZOOMheatmap.pdf
+and eval_RFv4.1_20181022_purp_spec_badness_cv25Run2_THRESHZOOMheatmap.pdf,
+which show what interest thresh + probBad cutoffs were good for each, show
+that probBad at least stays pretty stable. Phew!
+Also shows that the _pareto.csv process is maybe losing some good data
+points? Those heatmaps show good ones that aren't in the pareto.csvs.
+
+
+
+The purchaser started using this model after the day's work of 2018/10/23.

@@ -1,0 +1,42 @@
+0) Write the `pwd` of this 'loans' repo into /etc/profile,
+as variable LOANSPATH, e.g.
+LOANSPATH="/home/pi/code/loans"
+(it doesn't seem to actually work, lol, buuut instead it's the well-known
+location where our scripts go looking for it).
+AND also set the LOANS_DIRPATH const in purchaser/source_cpp/account_info.h
+to the same. TODO would be nice to have this also just read from /etc/profile...
+
+0.5) create and make writable monitor/publish_http.sh. One example:
+mv /home/pi/loans/monitor/*.png /media/pi/tb4/http_serving/
+mv /home/pi/loans/monitor/data/*.png /media/pi/tb4/http_serving/
+tail -n500 $LOANSPATH/purchaser/logs/cur* >/media/pi/tb4/http_serving/loanlog.txt
+
+OR just have it be a no-op.
+
+1) Prereqs:
+=R: it is an apt package, but stays more up to date if you add
+    the cran R repo - Google how to!
+=R packages: stringr, lubridate, Rcpp, xgboost
+=apt install imagemagick, to get the `convert` command line tool
+=apt install libcurl4-openssl-dev
+
+2) In purchaser, `mkdir tmpRtoD` and `mkdir logs`
+
+3) Add the following line to /etc/fstab:
+tmpfs    /path/to/loans/purchaser/tmpRtoD   tmpfs   rw,mode=1777,size=4M   0 0
+
+4) crontab -e and add something like these lines:
+05 05 * * * /home/pi/loans/monitor/pull_lc_performance.sh >/home/pi/loans/monitor/_pullSTDOUT 2>/home/pi/loans/monitor/_pullSTDERR
+@reboot screen -S loans_r -dm sh -c 'sleep 10 ; cd /home/pi/loans/purchaser && ./LOAN_PREDICTOR_R.sh'
+@reboot screen -S loans_cpp -dm sh -c 'sleep 40 ; cd /home/pi/loans/purchaser && ./RUNLOANS.sh'
+
+
+5) you need a model file (e.g. RMODEL_XGBv1_SEP2019_rebuilt) in the purchaser directory.
+either copy one over from old install, or follow README to build a new one.
+
+6) `make` in purchaser.
+
+7) populate purchaser/state/EXAMPLEACCOUNT/totalCurInvested.txt with a best guess
+
+8) In a screen session, in the purchaser directory,
+./RUNLOANS_STARTNOW.sh

@@ -1,0 +1,92 @@
+How to rebuild the random forest model with the newest Lending Club data:
+========================================
+DOWNLOAD AND CLEAN:
+========================================
+
+1) download all of the history files from LC: LoanStats3a_securev1.csv through
+   LoanStats3d_securev1.csv (or however far it goes). (See the datadownload/
+   directory for how to do this (mostly) directly from destiny).
+
+2) put them all (unzipped) in this top level directory.
+
+3) run ./clean_LC_historical.sh. (This step will delete the input .csvs. If you
+   still have the .zips around, it's safe to delete those yourself).
+
+4) open an R terminal, and source("import_LC_historical.R"). Your nice, cleaned,
+   usable historical data is now in cleaned_historical.csv.
+   (After this step, you can delete combined.csv).
+
+========================================
+REBUILD MODEL:
+========================================
+
+1) in modelBuildingVars.R, set rfOutputFilename to desired file name to
+   receive the to-be-used model. Set FIVE_ and THREE_YEARS_AGO appropriately.
+
+1.5) if you would like to try different features/hyperparams, have multiple
+     source("do_one_xgb_crossval.r") stanzas in crossvalRFmaster.R. Also, you
+     can easily compare againt previous runs by plugging _pareto.csv filenames
+     into compare_filenames. (Old+new must total no more than 6).
+
+2) [This step can take a while - run it from within screen, just in case].
+   From an R terminal in this top level dir: source("crossvalRFmaster.R")
+
+3) **rfOutputFilename"_pareto.csv" will contain good int+badProb cutoffs for
+     this model, and their historical ROIs. (_all.csv includes the bad ones).
+   **rfOutputFilename"_record.pdf" is a plot of historical ROIs for badProb
+     and interest buckets.
+   **_writeoffs.pdf is _record.pdf with income subtracted off (lossess only).
+   **_useful_heatmap.pdf is a *thresholded*, not bucketed, heatmap. That is,
+     the cell at like interest 0.1, probBad 0.06, is what you would see for that
+     entry in _all.csv or _pareto.csv.
+   **********BUT BEST OF ALL! (at least while investigating features/params).
+             Is the output of compare_scatterplots.r, whose filename is
+             determined by compare_scatter_output_pdf.
+
+3.5)    After making your picks, copy these into recordkeeping/, and make a
+        _SUMMARY_***.txt file in recordkeeping/ describing your model.
+
+4) Browse the _pareto.csv of your chosen model (or better yet the
+   compare_scatterplots.r output pdf), to get a feel for the
+   badProb+interest cutoffs, and ROIs and fractakens. However, you're no longer
+   actually manually picking these badProb/interest cutoffs: set_spend_params.r
+   will pick on-the-fly for you. (See step 6).
+
+5) Run buildRealRFmodel.R, after adjusting (if applicable) RF features/params.
+
+6) Finally, !!!COPY THE _pareto.csv OF YOUR CHOSEN MODEL'S CROSSVAL into
+   purchaser/state/curPareto.csv  !!!
+   BE SURE TO DO THIS! (buildRealRFmodel.R should also remind you).
+
+========================================
+DEPLOY
+========================================
+
+1) in loan_predictor.r, change the argument to rf<-rememberForest("...") to be
+   the purchaser/ filepath that buildRealRFmodel.R wrote the model into.
+
+2) Copy cur_badness_by_zip.csv and cur_purp_spec_badness.csv to
+   purchaser/badness_by_zip.csv and purchaser/purp_spec_badness.csv.
+
+3) in predictor_functions.r, update the hardcoded default badness_by_zip value.
+
+4) ....that should be it. Don't even need to restart the C++ program.
+   (However, you do need to restart if you want a new portfolio id. Make the
+    portfolio on LC.com, get its ID from URL,
+    put that ID in purchaser/source/account_info.d, recompile with `dub build`
+******Running looks like******
+./rest_loans_cpp --startnow=false --spendcap=2600 2>>logs/somefile
+(well, actually just use the RUNLOANS.sh scripts)
+******************************
+   THEN, in monitor/calculate_lc_performance.r, just add the new portfolio name
+   to the list. Safe to leave plot_gain.r alone. You need to make additions in
+   there to see charts of the new portfolio, but nothing will break if you don't
+   add them.
+
+NOTE ON LOGS: if you move to a new log file, you need to go into
+monitor/pull_lc_performance.sh, add a new "grep available" line with the new
+"cur_" log name, and remove the "cur_" from the previous "grep available" line.
+(Also move that old cur_ file in purchaser/logs!)
+
+NOTE ON MONITOR: the _PERFORMANCE.csv and _CHARGEOFFS.csv of the new portfolio
+both need the column names manually written in at the top.
